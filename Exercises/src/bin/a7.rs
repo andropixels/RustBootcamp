@@ -10,4 +10,10 @@
 // * Use a match expression to determine which color
 //   name to print
 
+// Code a function which accepts a enum Direction and based on the result of that function print out the direction 
+
+
+
+
+
 fn main() {}
