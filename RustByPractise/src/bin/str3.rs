@@ -9,5 +9,7 @@ fn main() {
 }
 
 
-
+/*
+Hint : only String and &str can be concated 
+*/
 
