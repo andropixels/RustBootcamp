@@ -11,3 +11,5 @@ fn main() {
  /*
   Hints: This is a case of partial move
  */
+
+ 
