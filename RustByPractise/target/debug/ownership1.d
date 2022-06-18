@@ -1,1 +1,0 @@
-/home/sangeet/rustprac2/RustBootCamp/RustBootcamp/Exercises/src/RustByPractise/target/debug/ownership1: /home/sangeet/rustprac2/RustBootCamp/RustBootcamp/Exercises/src/RustByPractise/src/bin/ownership1.rs
