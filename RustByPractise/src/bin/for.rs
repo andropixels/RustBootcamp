@@ -14,12 +14,12 @@ fn main() {
 
     let mut names = vec!["Bob", "Frank", "Ferris"];
 
-    iter(&names);
+    iter(names);
     iter_mut(&mut names);
     into_iter(names); // consumes names    
 }
 
-fn iter(names: &Vec<&str>) {
+fn iter(names: Vec<&str>) {
     for name in names.iter() {
         match *name {
             "Ferris" => println!("There is a rustacean among us!"),

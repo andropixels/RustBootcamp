@@ -4,7 +4,7 @@ fn main() {
 
     let r1 = &c;
     // Fill the blank，dont change other code
-    let __ r2 = c;
+    let  r2 = c;
 
     assert_eq!(*r1, *r2);
     
@@ -13,6 +13,7 @@ fn main() {
 
     println!("Success!");
 }
+
 
 // Get memory address string
 fn get_addr(r: &char) -> String {

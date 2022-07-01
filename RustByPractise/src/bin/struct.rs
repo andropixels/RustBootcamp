@@ -75,3 +75,48 @@ fn square(origin: Point, dimension: f32) -> Rectangle {
 
     Rectangle{ p1: origin, p2: Point { x: x + dimension, y: y + dimension}}
 }
+
+
+
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn can_hold(one:&Rectangle, other: &Rectangle) -> bool {
+        one.width > other.width && one.height > other.height
+    }
+
+    #[test]
+    fn larger_can_hold_smaller() {
+        // --snip--
+        let larger = Rectangle {
+            width: 8,
+            height: 7,
+        };
+        let smaller = Rectangle {
+            width: 5,
+            height: 1,
+        };
+
+        assert!(can_hold(&smaller,&larger));
+    }
+
+    #[test]
+    fn smaller_cannot_hold_larger() {
+        let larger = Rectangle {
+            width: 8,
+            height: 7,
+        };
+        let smaller = Rectangle {
+            width: 5,
+            height: 1,
+        };
+
+        assert!(!can_hold(&larger,&smaller));
+        
+        
+    }
+
+
