@@ -1,4 +1,4 @@
-// Topic: User input
+// Topic: User input and option
 //
 // Requirements:
 // * Verify user input against pre-defined keywords

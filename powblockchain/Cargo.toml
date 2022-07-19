@@ -1,9 +1,13 @@
 [package]
-name = "activities"
+name = "powblockchain"
 version = "0.1.0"
-authors = [""]
-edition = "2018"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+chrono = "0.4.19"
+serde = "1.0.139"
+serde_derive = "1.0.139"
+serde_json = "1.0.82"
+sha2 = "0.10.2"
