@@ -43,12 +43,13 @@ struct Chain{
 */
 
 use std::vec;
-
-struct Block<'a>{
+#[derive(Debug)]
+struct Block{
     header:BlockHeader,
-    transaction:Vec<Transaction<'a>>,
+    transaction:Vec<Transaction>,
     count:u32 
   }
+
 
   
   #[derive(Debug,Serialize,Deserialize)]
@@ -61,27 +62,28 @@ struct Block<'a>{
     }
 
 
- #[derive(Debug,Serialize,Deserialize)]
-    struct  Transaction<'a>{
-        sender:&'a str,
-        reciever:&'a str ,
+ #[derive(Debug,Serialize,Deserialize,Clone)]
+    struct  Transaction{
+        sender:String,
+        reciever:String ,
         amount:f32
 }
-
-pub struct Chain<'a >{
-    chain:Vec<Block<'a>>,
+#[derive(Debug)]
+pub struct Chain<'a>{
+    chain:Vec<Block>,
     miner_addr:&'a str,
     reward:f32,
     difficulty:u32,
-    curr_trans:Vec<Transaction<'a >>
+    curr_trans:Vec<Transaction>
 }
 
 // generating block  -> method 
 
+
 impl<'a>Chain<'a> {
 
 
- pub    fn new(miner_addr:&'a str,difficulty:u32,reward:f32)-> Self{
+ pub fn new(miner_addr:&'a str,difficulty:u32,reward:f32)-> Self{
 
         let mut chain = Chain{
 
@@ -93,14 +95,42 @@ impl<'a>Chain<'a> {
         }; 
      
 
-        // generate_new_block
+        // generate_new_block //
         chain.generate_new_block(); // genesis block 
         chain 
 
     }
 
 
-    fn generate_new_block(&mut self){
+ pub fn add_transaction(&mut self,sender:String,rec:String,amount:f32) -> Result<(),String> {
+ 
+// 
+/*
+    struct  Transaction<'a>{
+        sender:&'a str,
+        reciever:&'a str ,
+        amount:f32
+} 
+
+*/
+
+let trans = Transaction{
+
+      sender:sender,
+      reciever:rec,
+      amount
+};
+
+self.curr_trans.push(trans);
+
+
+Ok(())
+
+ }
+
+
+
+  pub   fn generate_new_block(&mut self) -> Result<(),String>{
 
         //
         // ? 
@@ -125,8 +155,8 @@ let header = BlockHeader {
     // 
 
     let reward_trans = Transaction{
-        sender:"Root",
-        reciever:self.miner_addr,
+        sender:String::from("Root"),
+        reciever:self.miner_addr.to_owned(),
         amount:100.0
 
     };
@@ -139,15 +169,32 @@ let header = BlockHeader {
         count:0,
         };
    block.transaction.push(reward_trans);
-   
+   block.transaction.append(&mut self.curr_trans)  ;
    block.count = block.transaction.len() as u32 ;
-block.header.merkle_hash = Self::get_merkle(block.transaction);
+block.header.merkle_hash = Self::get_merkle(block.transaction.clone());
 
 //how to get the prev hash ?
 // how to get the merkle ?
+// 
+/*
+
+struct Block<'a>{
+    header:BlockHeader,
+    transaction:Vec<Transaction<'a>>,
+    count:u32 
+  }
+
+*/
+  Self::proof_of_work(&mut  block.header)  ;
+
+     println!("{:#?}",block);
+
+     // pow 
+     self.chain.push(block);
 
 // pow ? 
 
+Ok(())
         
     }
 
@@ -155,6 +202,74 @@ block.header.merkle_hash = Self::get_merkle(block.transaction);
 //?? 
 // Transactions
 // 
+
+fn proof_of_work(header:&mut BlockHeader){
+
+
+    //hash ->
+    // block_num 
+    // nonce -> 
+   // 004938yr347378r626395632758235
+    // hash -> 2 -> 00 
+    //  000000000000
+    //slices 
+
+    loop {
+        let hash = Self::Hash(header);
+        let slice = &hash[..header.difficulty as usize]; // &str "00"
+
+        let parsed_slice = slice.parse::<u32>();
+    
+        match parsed_slice {
+            Ok(val) =>{
+                     
+                if val != 0{
+                    //
+                    header.nonce+=1;
+    
+                }else {
+                       
+                    println!("{:?}",hash);
+                    break; 
+    
+                }
+                //
+            },
+            Err(_) =>{
+                     header.nonce+=1;
+                     continue;
+            }
+        };
+    
+    }
+   
+
+
+
+}
+
+// method 
+
+pub fn change_diff(&mut self,new_diff:u32)->Result<(),String>
+{
+
+self.difficulty = new_diff;
+
+
+Ok(())
+} 
+
+
+pub fn change_reward(&mut self,new_reward:f32)->Result<(),String>
+{
+
+self.reward = new_reward;
+
+
+Ok(())
+} 
+
+
 fn get_merkle(curr_trans:Vec<Transaction>) -> String {
   let mut  merkle = Vec::new();
 
@@ -270,7 +385,7 @@ let result = hasher.finalize();
 
     let mut s= String::new();
     for b in item {
-        write!(&mut s,"{:?}",b).expect("unable to convert");
+        write!(&mut s,"{:x}",b).expect("unable to convert");
     }
     s
  }
@@ -279,3 +394,6 @@ let result = hasher.finalize();
   //  
 
 }
+
+
+
