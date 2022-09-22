@@ -1,2 +1,3 @@
 # RustBootcamp
-Exercises for Rust practise
+Exercises and projects for Rust practise
+
