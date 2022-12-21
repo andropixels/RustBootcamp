@@ -1,7 +1,6 @@
 // trait + type + trait bounds 
 
 use std::collections::HashMap;
-
 use std::hash::Hash;
 use num::traits::{Zero,CheckedAdd,CheckedSub};
 pub trait Trait {
