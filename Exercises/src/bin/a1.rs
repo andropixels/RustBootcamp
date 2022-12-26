@@ -20,9 +20,6 @@ enum Ordinates{
     Data(i32,i32)
  }
 
-
-
-
 // Fill in the blank
 fn add<A:PartialEq>(a:A,b:A)-> bool  {
 
