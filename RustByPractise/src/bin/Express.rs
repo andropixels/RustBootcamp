@@ -1,4 +1,5 @@
 // Make it work with two ways
+
 fn main() {
     let v = {
         let mut x = 1;
