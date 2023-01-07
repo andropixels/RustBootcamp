@@ -10,7 +10,6 @@
 
 use std::fmt::Debug;
 
-
 enum Z{
     Data(Ordinates)
 }
