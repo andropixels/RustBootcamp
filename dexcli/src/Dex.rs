@@ -13,8 +13,6 @@ BTC,
 USDT
 }
 
-
-
 // buy_token(token:Token, amount:f64, balances:Vec<Balances> )
 
 
