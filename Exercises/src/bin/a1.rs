@@ -46,8 +46,6 @@ fn some<A:Debug+Copy,B:Debug+Copy>(mut a:A,b:B) {
     println!("{:?} {:?}", c,d);
 
 }
-
-
 enum Message {
     ChangeColor(i32,i32,i32),
     Echo(String),
