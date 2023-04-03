@@ -7,7 +7,6 @@ mod mychain;
 use mychain::Chain; 
 // adding 
 // pow 
-// 
 
 fn main() {
  
