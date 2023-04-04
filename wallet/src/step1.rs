@@ -10,7 +10,6 @@ pub struct Balances {
     wallet:HashMap<u32,u32> 
 }
 
-
 impl Balances {
 
     // set_balance
